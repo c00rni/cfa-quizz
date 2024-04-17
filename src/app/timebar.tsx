@@ -1,7 +1,14 @@
-// Display Time Bar
-export default function TimeBar() {
+
+interface TimeBarProps {
+    value?: number,
+    max?: number,
+    className?: string
+}
+
+export default function TimeBar({value, max, className}: TimeBarProps) {
   return (
     <>
+        <progress className={`${className}`} value={20} max={100} />
     </>
   );
 }
