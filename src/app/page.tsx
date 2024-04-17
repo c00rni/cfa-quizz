@@ -1,5 +1,5 @@
-import Image from "next/image";
 
+// Display Home page
 export default function Home() {
   return (
     <main>

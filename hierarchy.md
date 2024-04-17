@@ -1,0 +1,22 @@
+- HomePage
+  - Navigation
+    - Category
+    - ProfileButton
+    - ThemeSwitch
+  - main
+    - title
+    - CategoryButton
+    - Question
+      - text
+      - question
+      - TimeBar
+    - QuestionButton
+    - button submit
+    - Error message
+    - Score
+      - title
+      - div
+        - Category
+        - score
+        - number of questions
+        - play again button
