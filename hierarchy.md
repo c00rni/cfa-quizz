@@ -1,17 +1,17 @@
-- HomePage
+- HomePage - in / off quizz
   - Navigation
-    - Category
-    - ProfileButton
-    - ThemeSwitch
+    - Category - Props: imagePath, text
+    - ProfileButton (plus tard)
+    - ThemeSwitch - swtich on / off
   - main
     - title
-    - CategoryButton
-    - Question
+    - CategoryButton ()
+    - Question - reducer (list of question, actual question, time for the question, correct response)
       - text
       - question
-      - TimeBar
-    - QuestionButton
-    - button submit
+      - TimeBar -
+    - QuestionButton - props: selected yes/no, correct/wrong state
+    - button submit - time
     - Error message
     - Score
       - title

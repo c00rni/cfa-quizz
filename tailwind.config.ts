@@ -14,6 +14,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
+        purple: "#A729F5",
         pureWhite: "#FFF",
         green: "#26D782",
         red: "#EE5454",
@@ -27,13 +28,20 @@ const config: Config = {
         lightBluish: "#ABC1E1",
         lightBlue: "#EDF1F9",
         lightGray: "#F4F6FA",
+        red: "#EE5454",
+        green: "#26D782",
       },
       fontSize: {
         headingRegular: "4rem",
         headingBold: "8.8rem",
         regular: "1.8rem",
         medium: "2rem",
-        semiMedium: "1.4rem"
+        semiMedium: "1.4rem",
+      },
+      borderColor: {
+        purple: "#A729F5",
+        green: "#26D782",
+        red: "#EE5454",
       },
     },
   },

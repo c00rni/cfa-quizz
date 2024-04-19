@@ -1,38 +1,188 @@
 import OptionInput from "./optioninput";
-import QuestionButton from "./questionbutton";
+import QuestionButton, { Submition } from "./questionbutton";
 import TimeBar from "./timebar";
-import { ReactNode } from 'react'
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
+import { quizzData } from "./mockdata";
+import Image from "next/image";
+import { time } from "console";
 
-const mockData = [
-  {label: "A", text: "4.5 : 1"},
-  {label: "B", text: "3 : 1"},
-  {label: "C", text: "2.5 : 1"},
-  {label: "D", text: "5 : 1"},
-]
+const label = ["A", "B", "C", "D"];
 
 interface QuestionProps {
-  category?: ReactNode,
+  category?: ReactNode;
+  quizzType: string;
+  setQuizzType: Dispatch<SetStateAction<string>>;
 }
 
+export interface Question {
+  question?: string;
+  options: string[];
+  answer?: string;
+  time?: number;
+  submited?: boolean;
+}
+
+export interface Category {
+  title: string;
+  icon: string;
+  questions: Question[];
+}
+
+export interface Quizz {
+  title: string;
+  icon: string;
+  color?: string;
+  questions: Question[];
+  current: number;
+  score: number;
+  length: number;
+}
+
+function initQuizz(category: string): Quizz {
+  const data: Category = quizzData.filter(
+    (topic) => topic.title.toUpperCase() == category.toUpperCase()
+  )[0];
+  const quizz: Quizz = {
+    ...data,
+    current: 0,
+    score: 0,
+    length: data.questions.length,
+    questions: data.questions.map((question) => {
+      return { ...question, submited: false };
+    }),
+  };
+  return quizz;
+}
 
 // Display Questions
-export default function Question({category}: QuestionProps) {
-  let questionText = "Which of these color contrast ratios defines the minimum WCAG 2.1 Level AA requirement for normal text?";
-  let score = 8;
+export default function Question({
+  category,
+  quizzType,
+  setQuizzType,
+}: QuestionProps) {
+  const [selection, setSelection] = useState<string>("");
+  const [quizz, setQuizz] = useReducer<any>(reducer, initQuizz(quizzType));
+  const { title, icon, color, questions, current, length, score } = quizz;
+  console.log(
+    title,
+    "/",
+    icon,
+    "/",
+    color,
+    "/",
+    questions,
+    "/",
+    current,
+    "/",
+    length,
+    "/score:",
+    score
+  );
+  const currentQuestion = questions[current];
+  const [displayTimeError, setDisplayTimeError] = useState(false);
+
+  function reducer(state: Quizz, action: string) {
+    const newState = { ...state };
+
+    switch (action) {
+      case "submit":
+        newState.questions[state.current].submited = true;
+
+        break;
+      case "next":
+        const optionIndex = label.indexOf(selection);
+        console.log(state.questions[state.current]);
+        console.log("State current: ", state.current);
+        if (state.questions[state.current].submited == true) {
+          console.log("Validate Submited !!");
+          newState.current += 1;
+          console.log("Selection:", selection);
+          console.log(
+            state.questions[state.current].options[optionIndex],
+            " = ",
+            state.questions[state.current].answer
+          );
+          if (
+            selection != "" &&
+            state.questions[state.current].options[optionIndex] ==
+              state.questions[state.current].answer
+          ) {
+            console.log("Good response !!!");
+            newState.score += 1;
+          }
+        }
+        break;
+      default:
+        console.log("Action not define");
+    }
+    return { ...newState };
+  }
+
+  const questionProgressBar = useMemo(() => {
+    return (
+      <TimeBar
+        startValue={0}
+        max={currentQuestion?.time}
+        question={currentQuestion}
+        setQuizz={setQuizz}
+      />
+    );
+  }, [currentQuestion]);
+
+  console.log("CURRENT: ", current, " ::::: lenght: ", length);
+  console.log(current < length);
   return (
     <>
-      {false ? (
+      {current < length ? (
         <>
           <div className="flex flex-col gap-6 mt-8">
             <div>
-              <p className="text-semiMedium text-grayNavy italic mb-4">Question X of X</p>
-              <p className="text-medium font-medium">{questionText}</p>
+              <p className="text-semiMedium text-grayNavy italic mb-4">
+                Question {current + 1} of {length}
+              </p>
+              <p className="text-medium font-medium">
+                {currentQuestion.question}
+              </p>
             </div>
-            <TimeBar />
+            {questionProgressBar}
           </div>
           <div className="flex flex-col mt-12 gap-4">
-            {mockData.map((item) => <OptionInput key={item.label} label={item.label}>{item.text}</OptionInput>)}
-            <QuestionButton />
+            {currentQuestion.options.map((option: string, index: number) => {
+              return (
+                <OptionInput
+                  key={index}
+                  selection={selection}
+                  setSelection={setSelection}
+                  label={label[index]}
+                  state={quizz}
+                >
+                  {option}
+                </OptionInput>
+              );
+            })}
+            <QuestionButton state={quizz} setState={setQuizz} />
+            <div
+              className={`${
+                displayTimeError ? "block" : "hidden"
+              } flex items-center justify-center gap-4`}
+            >
+              <Image
+                width={40}
+                height={40}
+                src={require("./assets/images/icon-error.svg")}
+                alt="Error"
+              />
+              <p className="text-red text-regular">Please select an answer</p>
+            </div>
           </div>
         </>
       ) : (
@@ -44,11 +194,16 @@ export default function Question({category}: QuestionProps) {
           <div className="bg-white flex flex-col py-8 justify-center items-center rounded-[12px]">
             {category}
             <h1 className="text-headingBold font-bold">{score}</h1>
-            <p className="text-semiMedium text-grayNavy">out of X</p>
+            <p className="text-semiMedium text-grayNavy">out of {length}</p>
           </div>
-          <div className="rounded-[12px] bg-purple text-white text-center font-medium text-regular p-3 mt-4">Play Again</div>
+          <div
+            onClick={() => setQuizzType("")}
+            className="rounded-[12px] bg-purple text-white text-center font-medium text-regular p-3 mt-4"
+          >
+            Play Again
+          </div>
         </>
       )}
-  </>
+    </>
   );
 }

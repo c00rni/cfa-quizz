@@ -4,10 +4,10 @@ import "./globals.css";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
+/*export const metadata: Metadata = {
   title: "CFA Quizz",
   description: "Training for CFA exam",
-};
+};*/
 
 export default function RootLayout({
   children,
