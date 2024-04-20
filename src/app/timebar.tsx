@@ -26,13 +26,11 @@ export default function TimeBar({
     }, 1000);
 
     const timeoutId = setTimeout(() => {
-      console.log("call 1");
       clearInterval(intervalId);
       if (question.submited == false) setQuizz("submit");
     }, max * 1000);
 
     return () => {
-      console.log("call 2");
       clearTimeout(timeoutId);
       clearInterval(intervalId);
     };

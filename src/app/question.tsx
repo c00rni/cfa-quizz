@@ -5,15 +5,12 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useCallback,
-  useEffect,
   useMemo,
   useReducer,
   useState,
 } from "react";
 import { quizzData } from "./mockdata";
 import Image from "next/image";
-import { time } from "console";
 
 const label = ["A", "B", "C", "D"];
 
@@ -72,21 +69,6 @@ export default function Question({
   const [selection, setSelection] = useState<string>("");
   const [quizz, setQuizz] = useReducer<any>(reducer, initQuizz(quizzType));
   const { title, icon, color, questions, current, length, score } = quizz;
-  console.log(
-    title,
-    "/",
-    icon,
-    "/",
-    color,
-    "/",
-    questions,
-    "/",
-    current,
-    "/",
-    length,
-    "/score:",
-    score
-  );
   const currentQuestion = questions[current];
   const [displayTimeError, setDisplayTimeError] = useState(false);
 
@@ -100,29 +82,18 @@ export default function Question({
         break;
       case "next":
         const optionIndex = label.indexOf(selection);
-        console.log(state.questions[state.current]);
-        console.log("State current: ", state.current);
         if (state.questions[state.current].submited == true) {
-          console.log("Validate Submited !!");
           newState.current += 1;
-          console.log("Selection:", selection);
-          console.log(
-            state.questions[state.current].options[optionIndex],
-            " = ",
-            state.questions[state.current].answer
-          );
           if (
             selection != "" &&
             state.questions[state.current].options[optionIndex] ==
               state.questions[state.current].answer
           ) {
-            console.log("Good response !!!");
             newState.score += 1;
           }
         }
         break;
       default:
-        console.log("Action not define");
     }
     return { ...newState };
   }

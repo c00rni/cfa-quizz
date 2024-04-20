@@ -14,14 +14,14 @@ export default function Home() {
     <>
       <div className="flex flex-col min-h-[100vh] w-[100%]">
         <Navigation className="h-[10vh] xl:h-[20vh]" />
-        <main className="md:flex xl:items-baseline md:flex-1 md:gap-24">
+        <main className="xl:flex xl:items-baseline xl:flex-1 xl:gap-24">
           {quizzType == "" ? (
             <>
               <div className="m-8 md:flex-[1]">
                 <h1 className="text-headingRegular font-light">
                   Welcome to the
                 </h1>
-                <h1 className="text-headingRegular font-bold">CFA Quiz!</h1>
+                <h1 className="text-headingRegular font-bold">Frontend Quiz!</h1>
                 <p className="italic text-grayNavy text-semiMedium">
                   Pick a subject to get started.
                 </p>
