@@ -30,7 +30,6 @@ export default function Home() {
               <div className="flex flex-col pt-4 gap-4 sm:pt-6 sm:gap-6 md:flex-1">
                 {quizzData.map((category, index) => {
                   return (
-                    <>
                       <div key={index}>
                         <CategoryButton
                           color={category.color}
@@ -44,7 +43,6 @@ export default function Home() {
                           />
                         </CategoryButton>
                       </div>
-                    </>
                   );
                 })}
               </div>
