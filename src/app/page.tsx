@@ -2,11 +2,11 @@
 import Image from "next/image";
 import CategoryButton from "./categoryButton";
 import Navigation from "./navigation";
-import Question from "./question";
+import Question, { Category } from "./question";
 import { useEffect, useState } from "react";
 import { quizzData } from "./mockdata";
 import { User } from "firebase/auth";
-import { addQuestion, onAuthStateChangedHelper } from "./firebase/firebase";
+import { onAuthStateChangedHelper } from "./firebase/firebase";
 
 // Display Home page
 export default function Home() {
@@ -21,11 +21,6 @@ export default function Home() {
     //Clearnup subscript user on unmont
     return () => unsubcribe()
   }, [])
-
-  const handleClick = () => {
-    const options = ["Bonjour", "Hello", "Halo", "Tere"]
-    addQuestion("Bonjour en estonien ?", options, "Tere", 20, ["Misc"]);
-  }
 
   return (
     <>

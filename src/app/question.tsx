@@ -21,17 +21,22 @@ interface QuestionProps {
 }
 
 export interface Question {
-  question?: string;
+  id: string;
+  question: string;
   options: string[];
-  answer?: string;
-  time?: number;
+  answer: string;
+  time: number;
   submited?: boolean;
+  mastery?: string;
 }
 
 export interface Category {
-  title: string;
-  icon: string;
-  questions: Question[];
+  id: string;
+  title?: string;
+  icon?: string;
+  color?: string;
+  functionArea?: string;
+  questions?: Question[];
 }
 
 export interface Quizz {
@@ -59,6 +64,7 @@ function initQuizz(category: string): Quizz {
   };
   return quizz;
 }
+
 
 // Display Questions
 export default function Question({

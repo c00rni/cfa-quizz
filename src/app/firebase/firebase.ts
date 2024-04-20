@@ -2,7 +2,8 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithPopup, onAuthStateChanged, User, GoogleAuthProvider } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, setDoc, doc, deleteDoc, CollectionReference } from "firebase/firestore";
+import { Category, Question } from "../question";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -39,16 +40,39 @@ export function onAuthStateChangedHelper(callback: (user: User | null) => void) 
 }
 
 // Get all category
+export async function getCategories() {
+    const querySnapshot = await getDocs(collection(db, "categories"));
+    const categories:Array<Category> = [];
+    querySnapshot.forEach((doc) => {
+        const {color , functionArea , icon} = doc.data()
+        categories.push({id: doc.id, icon, color, functionArea});
+    });
+    return categories;
+}
 
-// add a question
-export async function addQuestion(question: string, options: Array<string>, answer: string, seconds: number, categories: Array<string>) {
+// add a Categories
+export async function addCategory(title: string, icon: string, color: string, functionArea: string) {
     try {
-        const docRef = await addDoc(collection(db, "questions"), {
+        await setDoc(doc(db, "categories", title), {
+            icon: icon,
+            color: color,
+            functionArea: functionArea
+        });
+        console.log(`Category '${title}' created.`)
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+}
+
+// add a question to a catagory
+export async function addQuestion(question: string, options: Array<string>, answer: string, seconds: number, mastery:string, category: Category) {
+    try {
+        const docRef = await addDoc(collection(db, "categories",  category.id, "questions"), {
             quesiton: question,
             options: options,
             answer: answer,
             time: seconds,
-            categories: categories
+            mastery: mastery,
         });
         console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -56,11 +80,23 @@ export async function addQuestion(question: string, options: Array<string>, answ
     }
 }
 
-// get all quesitons
+// supprimer une question d'une category
+export async function deleteQuestion(categoryId: string, question: Question) {
+    try {
+        await deleteDoc(doc(db, "categories", categoryId, "questions", question.id));
+        console.log(`Document ${question.id} deleted.`)
+    } catch (e) {
+       console.error("Error adding document: ", e);
+    }
+}
 
-// get questions by category
-
-// Delete a question
-
-// Delete a category and and all question
-
+// Get all question of a category
+export async function getCategoryQuesitons(catagory: Category) {
+    const querySnapshot = await getDocs(collection(db, "categories", catagory.id, "questions"));
+    const questions:Array<Question> = [];
+    querySnapshot.forEach((doc) => {
+        const {answer, mastery, options, question, time} = doc.data()
+        questions.push({id: doc.id, question, options, answer, time, mastery: mastery});
+    });
+    return questions;
+}
