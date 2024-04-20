@@ -3,17 +3,29 @@ import Image from "next/image";
 import CategoryButton from "./categoryButton";
 import Navigation from "./navigation";
 import Question from "./question";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { quizzData } from "./mockdata";
+import { User } from "firebase/auth";
+import { onAuthStateChangedHelper } from "./firebase/firebase";
 
 // Display Home page
 export default function Home() {
   const [quizzType, setQuizzType] = useState<string>("");
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubcribe = onAuthStateChangedHelper((user) => {
+      setUser(user);
+    });
+
+    //Clearnup subscript user on unmont
+    return () => unsubcribe()
+  }, [])
 
   return (
     <>
       <div className="flex flex-col min-h-[100vh] w-[100%]">
-        <Navigation className="h-[10vh] xl:h-[20vh]" />
+        <Navigation user={user} className="h-[10vh] xl:h-[20vh]" />
         <main className="xl:flex xl:items-baseline xl:flex-1 xl:gap-24">
           {quizzType == "" ? (
             <>
