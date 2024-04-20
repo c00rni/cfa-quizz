@@ -7,7 +7,13 @@ module.exports = {
         port: '',
         pathname: '/**',
       },
-    ],
+      {
+        protocol: 'https',
+        hostname: 'googleapis.com',
+        port: '',
+        pathname: '/**',
+      },
+     ],
   },
 }
 
