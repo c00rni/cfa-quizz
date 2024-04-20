@@ -2,13 +2,8 @@ import { Dispatch, SetStateAction } from "react";
 import { Quizz } from "./question";
 
 interface QuesitonButtonProps {
-  state: Quizz;
-  setState: Dispatch<SetStateAction<Submition>>;
-}
-
-export interface Submition {
-  type: string;
-  awnser?: string;
+  state: any;
+  setState: Dispatch<SetStateAction<string>>;
 }
 
 // Display Question button

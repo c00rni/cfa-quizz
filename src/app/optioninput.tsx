@@ -9,7 +9,7 @@ interface OptionInputProps {
   key: React.Key;
   selection: string;
   setSelection: Dispatch<SetStateAction<string>>;
-  state: Quizz;
+  state: any;
 }
 
 // Display option of a question

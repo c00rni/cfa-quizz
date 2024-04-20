@@ -1,5 +1,4 @@
 import OptionInput from "./optioninput";
-import QuestionButton, { Submition } from "./questionbutton";
 import TimeBar from "./timebar";
 import {
   Dispatch,
@@ -11,6 +10,7 @@ import {
 } from "react";
 import { quizzData } from "./mockdata";
 import Image from "next/image";
+import QuestionButton from "./questionbutton";
 
 const label = ["A", "B", "C", "D"];
 
@@ -68,7 +68,7 @@ export default function Question({
 }: QuestionProps) {
   const [selection, setSelection] = useState<string>("");
   const [quizz, setQuizz] = useReducer<any>(reducer, initQuizz(quizzType));
-  const { title, icon, color, questions, current, length, score } = quizz;
+  const { title, icon, color, questions, current, length, score }:any = quizz;
   const currentQuestion = questions[current];
   const [displayTimeError, setDisplayTimeError] = useState(false);
 
