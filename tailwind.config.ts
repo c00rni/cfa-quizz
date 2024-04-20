@@ -12,7 +12,12 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "light-desktop": "url('./assets/images/pattern-background-desktop-light.svg')",
-      },
+        "dark-desktop": "url('./assets/images/pattern-background-desktop-dark.svg')",
+        "light-tablet": "url('./assets/images/pattern-background-tablet-light.svg')",
+        "dark-tablet": "url('./assets/images/pattern-background-tablet-dark.svg')",
+        "light-mobile": "url('./assets/images/pattern-background-mobile-light.svg')",
+        "dark-mobile": "url('./assets/images/pattern-background-mobile-dark.svg')",
+},
       colors: {
         purple: "#A729F5",
         pureWhite: "#FFF",
