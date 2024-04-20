@@ -2,7 +2,7 @@ export const quizzData = [
         {
             "title": "HTML",
             "icon": "./assets/images/icon-html.svg",
-            "color": "#FFF1E9",
+            "color": "bg-[#FFF1E9]",
             "questions": [
                 {
                     "question": "What does HTML stand for?",
@@ -119,7 +119,7 @@ export const quizzData = [
         {
             "title": "CSS",
             "icon": "./assets/images/icon-css.svg",
-            "color": "#E0FDEF",
+            "color": "bg-[#E0FDEF]",
             "questions": [
                 {
                     "question": "What does CSS stand for?",
@@ -236,7 +236,7 @@ export const quizzData = [
         {
             "title": "JavaScript",
             "icon": "./assets/images/icon-js.svg",
-            "color": "#EBF0FF",
+            "color": "bg-[#EBF0FF]",
             "questions": [
                 {
                     "question": "Which syntax is correct to output 'Hello World' in an alert box?",
@@ -353,7 +353,7 @@ export const quizzData = [
         {
             "title": "Accessibility",
             "icon": "./assets/images/icon-accessibility.svg",
-            "color": "#F6E7FF",
+            "color": "bg-[#F6E7FF]",
             "questions": [
                 {
                     "question": "What does 'WCAG' stand for?",

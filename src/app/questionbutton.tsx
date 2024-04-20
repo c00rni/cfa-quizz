@@ -24,7 +24,7 @@ export default function QuestionButton({
             ? () => setState("next")
             : () => setState("submit")
         }
-        className="rounded-[12px] bg-purple hover:bg-opacity-50 text-white text-center font-medium text-regular p-6"
+        className="rounded-[12px] sm:rounded-[24px] bg-purple hover:bg-opacity-50 text-white text-center font-medium text-regular p-6"
       >
         {state.questions[state.current].submited
           ? "Next Question"

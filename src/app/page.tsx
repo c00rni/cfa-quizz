@@ -6,9 +6,6 @@ import Question from "./question";
 import { useState } from "react";
 import { quizzData } from "./mockdata";
 
-function reducer(state: Array<any>, action: string) {
-  state.filter((item) => item.title == action);
-}
 // Display Home page
 export default function Home() {
   const [quizzType, setQuizzType] = useState<string>("");
@@ -16,11 +13,11 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col min-h-[100vh] w-[100%]">
-        <Navigation className="h-[10vh]" />
-        <main>
+        <Navigation className="h-[10vh] xl:h-[20vh]" />
+        <main className="md:flex xl:items-baseline md:flex-1 md:gap-24">
           {quizzType == "" ? (
             <>
-              <div className="m-8">
+              <div className="m-8 md:flex-[1]">
                 <h1 className="text-headingRegular font-light">
                   Welcome to the
                 </h1>
@@ -30,19 +27,18 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="flex flex-col pt-4 gap-4">
+              <div className="flex flex-col pt-4 gap-4 sm:pt-6 sm:gap-6 md:flex-1">
                 {quizzData.map((category, index) => {
                   return (
                     <>
                       <div key={index}>
                         <CategoryButton
-                          color={`bg-[${category.color}]`}
+                          color={category.color}
                           setQuizzType={setQuizzType}
                           text={category.title}
                         >
                           <Image
-                            width={25}
-                            height={25}
+                            sizes="(max-width: 390px) 25px, (max-width: 1200) 40px"
                             src={require(`${category.icon}`)}
                             alt={category.title}
                           />

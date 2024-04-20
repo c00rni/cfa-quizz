@@ -35,5 +35,5 @@ progress[value]::-webkit-progress-bar {
 
 progress[value]::-webkit-progress-value {
   border-radius: 10px;
-  background-color: #A729F5;
+  background-color: #a729f5;
 }

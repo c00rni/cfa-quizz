@@ -27,7 +27,7 @@ export default function OptionInput({
         onClick={() =>
           !state.questions[state.current].submited && setSelection(label)
         }
-        className={`${className} flex items-center p-4 group gap-8 rounded-[12px] bg-white shadow ${
+        className={`${className} flex items-center p-4 group gap-8 rounded-[12px] sm:rounded-[24px] bg-white shadow ${
           label == selection &&
           !state.questions[state.current].submited &&
           "border-purple border-[3px]"
@@ -44,7 +44,7 @@ export default function OptionInput({
         }`}
       >
         <div
-          className={`flex shrink-0 justify-center items-center rounded-[12px] w-[40px] h-[40px] ${
+          className={`flex shrink-0 justify-center items-center rounded-[12px] w-[40px] h-[40px] sm:p-7 ${
             !state.questions[state.current].submited &&
             label == selection &&
             "bg-purple text-white"
@@ -74,8 +74,7 @@ export default function OptionInput({
           {state.questions[state.current].submited &&
             state.questions[state.current].answer == children && (
               <Image
-                width={30}
-                height={30}
+                sizes="(max-width: 390px) 30px, (max-width: 1200px) 50px"
                 src={require("./assets/images/icon-correct.svg")}
                 alt="Correct awnser"
               />
@@ -84,8 +83,7 @@ export default function OptionInput({
             state.questions[state.current].answer != children &&
             label == selection && (
               <Image
-                width={30}
-                height={30}
+                sizes="(max-width: 390px) 30px, (max-width: 1200px) 50px"
                 src={require("./assets/images/icon-error.svg")}
                 alt="Wrong awnser"
               />

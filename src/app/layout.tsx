@@ -15,14 +15,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-     <body className={`${rubik.className} px-8`}>
-      {children}
-      <div className="absolute min-h-[100vh] top-0 left-0 w-[100vw] -z-20 bg-lightGray">
-        <div className="absolute rounded-full top-[40%] -translate-x-1/2 -translate-y-1/2 w-[112vh] h-[112vh] -z-10 bg-lightBlue"></div>
-        <div className="absolute rounded-full top-[40%] -translate-x-1/2 -translate-y-1/2 w-[80vh] h-[80vh] -z-10 bg-lightGray"></div>
-      </div>
-    </body>
+    <html lang="en" className="sm:text-[18px]">
+      <body className={`${rubik.className} px-8 sm:px-16 md:px-24 `}>
+        {children}
+        <div className="absolute min-h-[100vh] top-0 left-0 w-[100vw] -z-20 bg-lightGray md:bg-light-desktop md:bg-cover">
+          <div className="md:hidden absolute rounded-full top-[40%] sm:top-0 -translate-x-1/2 -translate-y-1/2 w-[112vh] h-[112vh] -z-10 bg-lightBlue"></div>
+          <div className="md:hidden absolute rounded-full top-[40%] sm:top-0 -translate-x-1/2 -translate-y-1/2 w-[80vh] h-[80vh] -z-10 bg-lightGray"></div>
+         </div>
+      </body>
     </html>
   );
 }

@@ -138,13 +138,11 @@ export default function Question({
     );
   }, [currentQuestion]);
 
-  console.log("CURRENT: ", current, " ::::: lenght: ", length);
-  console.log(current < length);
   return (
     <>
       {current < length ? (
         <>
-          <div className="flex flex-col gap-6 mt-8">
+          <div className="flex flex-col gap-6 sm:gap-8 mt-8 xl:mt-0 xl:flex-[1]">
             <div>
               <p className="text-semiMedium text-grayNavy italic mb-4">
                 Question {current + 1} of {length}
@@ -155,7 +153,8 @@ export default function Question({
             </div>
             {questionProgressBar}
           </div>
-          <div className="flex flex-col mt-12 gap-4">
+          <div className="flex flex-col mt-12 xl:mt-0 sm:mt-20 xl:flex-[1]">
+            <div className="flex flex-col gap-4 sm:gap-5">
             {currentQuestion.options.map((option: string, index: number) => {
               return (
                 <OptionInput
@@ -170,7 +169,8 @@ export default function Question({
               );
             })}
             <QuestionButton state={quizz} setState={setQuizz} />
-            <div
+            </div>
+           <div
               className={`${
                 displayTimeError ? "block" : "hidden"
               } flex items-center justify-center gap-4`}
@@ -187,22 +187,24 @@ export default function Question({
         </>
       ) : (
         <>
-          <div className="m-8">
+          <div className="m-8 xl:flex-1">
             <h1 className="text-headingRegular font-light">Quiz completed</h1>
             <h1 className="text-headingRegular font-bold">You scored...</h1>
           </div>
-          <div className="bg-white flex flex-col py-8 justify-center items-center rounded-[12px]">
-            {category}
-            <h1 className="text-headingBold font-bold">{score}</h1>
-            <p className="text-semiMedium text-grayNavy">out of {length}</p>
+          <div className="xl:flex-1">
+            <div className="bg-white flex flex-col py-8 justify-center items-center rounded-[12px] sm:rounded-[24px]">
+              {category}
+              <h1 className="text-headingBold font-bold">{score}</h1>
+              <p className="text-semiMedium text-grayNavy">out of {length}</p>
+            </div>
+            <div
+              onClick={() => setQuizzType("")}
+              className="rounded-[12px] sm:rounded-[24px] bg-purple text-white text-center font-medium text-regular p-3 mt-4 sm:mt-8"
+            >
+              Play Again
+            </div>
           </div>
-          <div
-            onClick={() => setQuizzType("")}
-            className="rounded-[12px] bg-purple text-white text-center font-medium text-regular p-3 mt-4"
-          >
-            Play Again
-          </div>
-        </>
+       </>
       )}
     </>
   );
