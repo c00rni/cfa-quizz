@@ -1,3 +1,4 @@
+
 module.exports = {
   images: {
     remotePatterns: [
@@ -12,6 +13,12 @@ module.exports = {
         hostname: 'googleapis.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'firestore.googleapis.com',
+        port:'',
+        pathname: '/**'
       },
      ],
   },

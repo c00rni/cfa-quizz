@@ -2,22 +2,21 @@ import OptionInput from "./optioninput";
 import TimeBar from "./timebar";
 import {
   Dispatch,
-  ReactNode,
   SetStateAction,
+  useEffect,
   useMemo,
   useReducer,
   useState,
 } from "react";
-import { quizzData } from "./mockdata";
 import Image from "next/image";
 import QuestionButton from "./questionbutton";
+import { getCategoryQuestions } from "./firebase/firebase";
 
 const label = ["A", "B", "C", "D"];
 
 interface QuestionProps {
-  category?: ReactNode;
-  quizzType: string;
-  setQuizzType: Dispatch<SetStateAction<string>>;
+  quizzType: Category;
+  setQuizzType: Dispatch<SetStateAction<Category | null>>;
 }
 
 export interface Question {
@@ -33,7 +32,7 @@ export interface Question {
 export interface Category {
   id: string;
   title?: string;
-  icon?: string;
+  icon: string;
   color?: string;
   functionArea?: string;
   questions?: Question[];
@@ -42,40 +41,43 @@ export interface Category {
 export interface Quizz {
   title: string;
   icon: string;
-  color?: string;
+  color: string;
   questions: Question[];
   current: number;
   score: number;
   length: number;
 }
 
-function initQuizz(category: string): Quizz {
-  const data: Category = quizzData.filter(
-    (topic) => topic.title.toUpperCase() == category.toUpperCase()
-  )[0];
-  const quizz: Quizz = {
-    ...data,
-    current: 0,
-    score: 0,
-    length: data.questions.length,
-    questions: data.questions.map((question) => {
-      return { ...question, submited: false };
-    }),
-  };
-  return quizz;
+function initQuizz(category: Category) {
+  if (category && category.questions) {
+    const quizz: Quizz = {
+      title: category.id,
+      icon: category.icon,
+      color: category.color || "bg-[fff]",
+      current: 0,
+      score: 0,
+      length: category.questions?.length || 0,
+      questions: category.questions.map((question) => {
+        return { ...question, submited: false };
+      }),
+    };
+    return quizz
+  }
+  throw new Error("Category was not initialize properly.");
 }
+
+
 
 
 // Display Questions
 export default function Question({
-  category,
   quizzType,
   setQuizzType,
 }: QuestionProps) {
   const [selection, setSelection] = useState<string>("");
   const [quizz, setQuizz] = useReducer<any>(reducer, initQuizz(quizzType));
   const { title, icon, color, questions, current, length, score }:any = quizz;
-  const currentQuestion = questions[current];
+  const currentQuestion = questions[current]
   const [displayTimeError, setDisplayTimeError] = useState(false);
 
   function reducer(state: Quizz, action: string) {
@@ -170,12 +172,12 @@ export default function Question({
           </div>
           <div className="xl:flex-1">
             <div className="bg-white flex flex-col py-8 justify-center items-center rounded-[12px] sm:rounded-[24px]">
-              {category}
+              {quizzType.id}
               <h1 className="text-headingBold font-bold">{score}</h1>
               <p className="text-semiMedium text-grayNavy">out of {length}</p>
             </div>
             <div
-              onClick={() => setQuizzType("")}
+              onClick={() => setQuizzType(null)}
               className="rounded-[12px] sm:rounded-[24px] bg-purple text-white text-center font-medium text-regular p-3 mt-4 sm:mt-8"
             >
               Play Again

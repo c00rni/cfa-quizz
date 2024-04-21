@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { Quizz } from "./question";
 
-interface QuesitonButtonProps {
+interface QuestionButtonProps {
   state: any;
   setState: Dispatch<SetStateAction<string>>;
 }
@@ -10,7 +9,7 @@ interface QuesitonButtonProps {
 export default function QuestionButton({
   state,
   setState,
-}: QuesitonButtonProps) {
+}: QuestionButtonProps) {
   return (
     <>
       <div

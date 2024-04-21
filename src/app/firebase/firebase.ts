@@ -41,12 +41,16 @@ export function onAuthStateChangedHelper(callback: (user: User | null) => void) 
 
 // Get all category
 export async function getCategories() {
-    const querySnapshot = await getDocs(collection(db, "categories"));
     const categories:Array<Category> = [];
-    querySnapshot.forEach((doc) => {
-        const {color , functionArea , icon} = doc.data()
-        categories.push({id: doc.id, icon, color, functionArea});
-    });
+    try {
+        const querySnapshot = await getDocs(collection(db, "categories"));
+        querySnapshot.forEach((doc) => {
+            const {color , functionArea , icon} = doc.data()
+            categories.push({id: doc.id, icon, color, functionArea});
+        });
+    } catch(e) {
+        console.log(e)
+    }
     return categories;
 }
 
@@ -58,40 +62,43 @@ export async function addCategory(title: string, icon: string, color: string, fu
             color: color,
             functionArea: functionArea
         });
-        console.log(`Category '${title}' created.`)
+        return true;
     } catch (e) {
         console.error("Error adding document: ", e);
     }
+    return false;
 }
 
 // add a question to a catagory
 export async function addQuestion(question: string, options: Array<string>, answer: string, seconds: number, mastery:string, category: Category) {
     try {
         const docRef = await addDoc(collection(db, "categories",  category.id, "questions"), {
-            quesiton: question,
+            question: question,
             options: options,
             answer: answer,
             time: seconds,
             mastery: mastery,
         });
         console.log("Document written with ID: ", docRef.id);
+        return true
     } catch (e) {
         console.error("Error adding document: ", e);
     }
+    return false
 }
 
 // supprimer une question d'une category
-export async function deleteQuestion(categoryId: string, question: Question) {
+export async function deleteQuestion(categoryId: string, questionId: string) {
     try {
-        await deleteDoc(doc(db, "categories", categoryId, "questions", question.id));
-        console.log(`Document ${question.id} deleted.`)
+        await deleteDoc(doc(db, "categories", categoryId, "questions", questionId));
+        console.log(`Document ${questionId} deleted.`)
     } catch (e) {
        console.error("Error adding document: ", e);
     }
 }
 
 // Get all question of a category
-export async function getCategoryQuesitons(catagory: Category) {
+export async function getCategoryQuestions(catagory: Category) {
     const querySnapshot = await getDocs(collection(db, "categories", catagory.id, "questions"));
     const questions:Array<Question> = [];
     querySnapshot.forEach((doc) => {
