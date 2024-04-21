@@ -2,9 +2,9 @@
 
 ## Overview
 
-This is a solution to the [Frontend quiz app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/frontend-quiz-app-BE7xkzXQnU). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+This is a modified version solution to the [Frontend quiz app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/frontend-quiz-app-BE7xkzXQnU). While studying for the [Chartered Financial Analyst](https://www.cfainstitute.org/) I use this app to gather questions on my learnings and revise important concepts.
 
-![Gif of the app](./play.gif)
+![Screenshop of the app](./playCFA.png)
 
 ### Links
 
@@ -19,6 +19,7 @@ following the single [responsibility principle](https://en.wikipedia.org/wiki/Si
 ### Built with
 
 - Mobile-first workflow
+- [Firestore](https://firebase.google.com/docs/firestore?hl=fr) - Use google cloud as backend server
 - [TypeScript](https://www.typescriptlang.org/)
 - [React](https://reactjs.org/) - JS library
 - [Next.js](https://nextjs.org/) - React framework
